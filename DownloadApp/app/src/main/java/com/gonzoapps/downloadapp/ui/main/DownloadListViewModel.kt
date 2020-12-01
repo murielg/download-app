@@ -25,7 +25,17 @@ class DownloadListViewModel(private val app: Application) : AndroidViewModel(app
 
     fun download(index: Int) {
         if (index >= 0) {
-            val URL = options.value?.elementAt(index)?.url
+            val url = options.value?.elementAt(index)?.url
+            executeDownload(url)
+        }
+    }
+
+    fun download(url: String) {
+        // TODO: Verify valid URL
+        executeDownload(url)
+    }
+
+    private fun executeDownload(URL: String?) {
             Timber.i(URL)
 //            val request = DownloadManager.Request(Uri.parse(URL))
 //                .setTitle(app.getString(R.string.app_name))
@@ -36,7 +46,6 @@ class DownloadListViewModel(private val app: Application) : AndroidViewModel(app
 //
 //            val downloadManager = app.getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
 //            downloadID = downloadManager.enqueue(request)
-        }
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
