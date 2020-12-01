@@ -1,4 +1,4 @@
-package com.gonzoapps.downloadapp
+package com.gonzoapps.downloadapp.ui.loadingbutton
 
 
 sealed class ButtonState {

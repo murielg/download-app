@@ -1,4 +1,4 @@
-package com.gonzoapps.downloadapp
+package com.gonzoapps.downloadapp.ui.loadingbutton
 
 import android.animation.ValueAnimator
 import android.content.Context

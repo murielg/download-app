@@ -1,4 +1,4 @@
-package com.gonzoapps.downloadapp.ui
+package com.gonzoapps.downloadapp.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -35,7 +35,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        return inflater.inflate(R.layout.fragment_download_detail, container, false)
     }
 
     companion object {
