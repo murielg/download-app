@@ -23,12 +23,15 @@ object DownloadReceiver: BroadcastReceiver() {
 
         val id: Long? = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
 
-        id.let {
-            Timber.i("onReceive id: $id")
-            Timber.i("onReceive action: ${intent?.action}")
+        val action = intent?.action
+
+        id?.let {
             GlobalScope.launch(Dispatchers.IO){
                 dataStore.downloadStatusFlow.collect {
-                    Timber.i( "Download Id is: ${it.id}")
+                    if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE) && id == it.id) {
+                        //TODO: Show Notification of successful download
+                        Timber.i("Successful download of id $it.id")
+                    }
                 }
             }
 
