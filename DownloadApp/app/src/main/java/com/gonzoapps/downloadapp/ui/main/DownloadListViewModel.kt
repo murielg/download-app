@@ -36,7 +36,7 @@ class DownloadListViewModel(private val app: Application, private val downloadSt
             val url = options.value?.elementAt(index)?.url
             url?.let { executeDownload(it) }
         } else {
-
+            _showToast.value = Event("Invalid Option. Please pick an option from the list")
         }
     }
 
