@@ -13,7 +13,6 @@ import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.domain.UrlOption
 import com.gonzoapps.downloadapp.util.Event
 import kotlinx.coroutines.launch
-import java.net.MalformedURLException
 
 
 class DownloadListViewModel(private val app: Application, private val downloadStatusRepository: DownloadStatusRepository) : AndroidViewModel(app) {
@@ -34,7 +33,7 @@ class DownloadListViewModel(private val app: Application, private val downloadSt
     fun download(index: Int) {
         if (index >= 0) {
             val url = options.value?.elementAt(index)?.url
-            url?.let { executeDownload(it) }
+            url?.let { scheduleDownload(it) }
         } else {
             _showToast.value = Event("Invalid Option. Please pick an option from the list")
         }
@@ -42,13 +41,13 @@ class DownloadListViewModel(private val app: Application, private val downloadSt
 
     fun download(url: String) {
         if (URLUtil.isValidUrl(url)) {
-            executeDownload(url)
+            scheduleDownload(url)
         } else {
             _showToast.value = Event("Invalid URL. Please make sure to provide a valid URL")
         }
     }
 
-    private fun executeDownload(URL: String) {
+    private fun scheduleDownload(URL: String) {
             val request = DownloadManager.Request(Uri.parse(URL))
                 .setTitle(app.getString(R.string.app_name))
                 .setDescription(app.getString(R.string.app_description))
@@ -56,7 +55,7 @@ class DownloadListViewModel(private val app: Application, private val downloadSt
                 .setAllowedOverMetered(true)
                 .setAllowedOverRoaming(true)
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS.toString(), "/download/repo.zip");
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             val downloadManager = app.getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
             downloadID = downloadManager.enqueue(request)
 

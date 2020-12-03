@@ -1,10 +1,13 @@
 package com.gonzoapps.downloadapp.receiver
 
 import android.app.DownloadManager
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
+import com.gonzoapps.downloadapp.util.sendNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
@@ -31,6 +34,7 @@ object DownloadReceiver: BroadcastReceiver() {
                     if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE) && id == it.id) {
                         //TODO: Show Notification of successful download
                         Timber.i("Successful download of id $it.id")
+                        context?.let { context ->  sendNotification(context)}
                     }
                 }
             }
@@ -38,4 +42,19 @@ object DownloadReceiver: BroadcastReceiver() {
         }
 
     }
+
+    private fun sendNotification(context: Context) {
+        Timber.i("Sending Notification")
+        val notificationManager = ContextCompat.getSystemService(
+            context,
+                NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.sendNotification(
+                "Succesful Download",
+                context
+        )
+
+    }
+
 }
