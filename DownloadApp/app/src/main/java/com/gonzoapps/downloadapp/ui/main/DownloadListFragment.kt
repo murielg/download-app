@@ -2,7 +2,6 @@ package com.gonzoapps.downloadapp.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,19 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gonzoapps.downloadapp.R
+import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.databinding.FragmentDownloadListBinding
 import com.gonzoapps.downloadapp.util.setCircleColor
 
 
 class DownloadListFragment : Fragment() {
 
-    private val listViewModel: DownloadListViewModel by lazy {
+    private val viewModel: DownloadListViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, DownloadListViewModel.Factory(activity.application))
+        ViewModelProvider(this, DownloadListViewModel.Factory(activity.application, DownloadStatusRepository.getInstance(activity)))
             .get(DownloadListViewModel::class.java)
     }
     private lateinit var binding: FragmentDownloadListBinding
@@ -33,7 +34,7 @@ class DownloadListFragment : Fragment() {
 
         binding = FragmentDownloadListBinding.inflate(inflater)
 
-        binding.viewModel = listViewModel
+        binding.viewModel = viewModel
 
         binding.lifecycleOwner = this
 
@@ -42,9 +43,9 @@ class DownloadListFragment : Fragment() {
         binding.buttonDownload.setOnClickListener {
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
             if (rg.checkedRadioButtonId != -1) {
-                listViewModel.download(rg.checkedRadioButtonId - 1)
+                viewModel.download(rg.checkedRadioButtonId - 1)
             } else if (!binding.edittextUrl.text.toString().equals("")) {
-                listViewModel.download(binding.edittextUrl.text.toString())
+                viewModel.download(binding.edittextUrl.text.toString())
             } else {
                 Toast.makeText(activity, "Select option or input your own custom URL below", Toast.LENGTH_SHORT).show()
             }
@@ -59,6 +60,12 @@ class DownloadListFragment : Fragment() {
             }
         }
 
+        viewModel.showToast.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
         return binding.root
 
     }
@@ -71,7 +78,7 @@ class DownloadListFragment : Fragment() {
             RadioGroup.LayoutParams.MATCH_PARENT,
             RadioGroup.LayoutParams.WRAP_CONTENT,
         )
-        val options = listViewModel.options.value
+        val options = viewModel.options.value
         options?.let {
             for ((index, option) in options.withIndex()) {
                 val radioButton = RadioButton(this.activity)

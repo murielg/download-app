@@ -22,7 +22,7 @@ buildscript {
         version_timber = "4.7.1"
         version_picasso = "2.5.2"
         version_recycler = "1.1.0"
-        version_material = "1.0.0"
+        version_material = "1.2.1"
     }
     repositories {
         google()
