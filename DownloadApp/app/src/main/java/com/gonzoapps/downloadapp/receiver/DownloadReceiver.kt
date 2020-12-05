@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import androidx.core.content.ContextCompat
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.util.sendNotification
@@ -32,10 +33,24 @@ object DownloadReceiver: BroadcastReceiver() {
             GlobalScope.launch(Dispatchers.IO){
                 dataStore.downloadStatusFlow.collect {
                     if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE) && id == it.id) {
-                        //TODO: Show Notification of successful download
-                        Timber.i("Successful download of id $it.id")
-                        context?.let { context ->  sendNotification(context)}
+                        val dm = context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                        val query = DownloadManager.Query()
+                        query.setFilterById(intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0));
+                        val cursor: Cursor = dm.query(query)
+                        if (cursor.moveToFirst()) {
+                            if (cursor.count > 0) {
+                                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                                if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                                    sendNotification(context)
+                                    Timber.i("Successful download of id $it.id")
+                                } else {
+                                    Timber.i("Download failed $it.id")
+                                }
+                            }
+                        }
+
                     }
+
                 }
             }
 
