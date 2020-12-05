@@ -35,7 +35,7 @@ object DownloadReceiver: BroadcastReceiver() {
                     if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE) && id == it.id) {
                         val dm = context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                         val query = DownloadManager.Query()
-                        query.setFilterById(intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0));
+                        query.setFilterById(id);
                         val cursor: Cursor = dm.query(query)
                         if (cursor.moveToFirst()) {
                             if (cursor.count > 0) {
