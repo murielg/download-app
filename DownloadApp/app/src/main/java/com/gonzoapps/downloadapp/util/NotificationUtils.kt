@@ -6,9 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavArgs
 import androidx.navigation.NavDeepLinkBuilder
 import com.gonzoapps.downloadapp.MainActivity
 import com.gonzoapps.downloadapp.R
+import com.gonzoapps.downloadapp.domain.DownloadDetails
+import com.gonzoapps.downloadapp.ui.detail.DetailFragmentArgs
 
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
@@ -17,7 +20,7 @@ private val FLAGS = 0
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
 
     val bundle = Bundle()
-    bundle.putString("EXTRA_INFO", "info")
+    bundle.putParcelable("download", DownloadDetails(0, "success", true))
 
     val testPendingIntent = NavDeepLinkBuilder(applicationContext)
             .setGraph(R.navigation.main_nav)

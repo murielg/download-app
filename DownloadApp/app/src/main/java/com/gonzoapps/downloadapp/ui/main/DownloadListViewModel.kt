@@ -55,7 +55,7 @@ class DownloadListViewModel(private val app: Application, private val downloadSt
                 .setAllowedOverMetered(true)
                 .setAllowedOverRoaming(true)
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS.toString(), "/download/repo.zip");
-//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             val downloadManager = app.getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
             downloadID = downloadManager.enqueue(request)
 

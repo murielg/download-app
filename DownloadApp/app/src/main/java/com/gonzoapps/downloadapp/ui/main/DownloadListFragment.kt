@@ -43,11 +43,11 @@ class DownloadListFragment : Fragment() {
         binding.buttonDownload.setOnClickListener {
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
             if (rg.checkedRadioButtonId != -1) {
-                viewModel.download(rg.checkedRadioButtonId - 1)
+                viewModel.download(rg.checkedRadioButtonId)
             } else if (!binding.edittextUrl.text.toString().equals("")) {
                 viewModel.download(binding.edittextUrl.text.toString())
             } else {
-                Toast.makeText(activity, "Select option or input your own custom URL below", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Please select option or input your own custom URL below", Toast.LENGTH_SHORT).show()
             }
             hideKeyboard()
         }
@@ -85,6 +85,7 @@ class DownloadListFragment : Fragment() {
                 radioButton.text = option.name
                 radioButton.setPadding(16,0,0,0)
                 radioButton.textSize = 16F
+                radioButton.id = index
                 radioButton.setTextColor(resources.getColor(R.color.colorPrimaryDark, activity?.theme))
                 radioButton.setCircleColor(resources.getColor(R.color.colorPrimary, activity?.theme))
                 radioGroup.addView(radioButton)
@@ -95,7 +96,7 @@ class DownloadListFragment : Fragment() {
                 hideKeyboard()
             }
         }
-        binding.linearLayoutRadiogroupContainer.addView(radioGroup)
+        binding.linearLayoutRadiogroupContainer.addView(radioGroup,0)
     }
 
     private fun hideKeyboard() {

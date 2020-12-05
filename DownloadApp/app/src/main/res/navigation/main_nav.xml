@@ -18,5 +18,9 @@
         android:id="@+id/detailFragment"
         android:name="com.gonzoapps.downloadapp.ui.detail.DetailFragment"
         android:label="Download Status"
-        tools:layout="@layout/fragment_download_detail" />
+        tools:layout="@layout/fragment_download_detail" >
+        <argument
+            android:name="download"
+            app:argType="com.gonzoapps.downloadapp.domain.DownloadDetails" />
+    </fragment>
 </navigation>
