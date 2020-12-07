@@ -11,11 +11,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.gonzoapps.downloadapp.databinding.ActivityMainBinding
 import com.gonzoapps.downloadapp.receiver.DownloadReceiver
+import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
+import com.gonzoapps.downloadapp.ui.main.DownloadListFragment
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     lateinit var binding: ActivityMainBinding
+
+    private lateinit var downloadReceiver : DownloadReceiver
+
+    private lateinit var navHostFragment : NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +37,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(DownloadReceiver)
+        unregisterReceiver(downloadReceiver)
     }
 
     private fun registerDownloadReceiver() {
+
+        downloadReceiver = object  : DownloadReceiver() {
+            override fun broadcastDownloadState(state: ButtonState) {
+                if (navController.currentDestination?.id == R.id.mainFragment) {
+                    val fragmentInstance = navHostFragment.childFragmentManager.primaryNavigationFragment as DownloadListFragment
+                    fragmentInstance.handleReceiverDownloadStatus(state)
+                }
+
+            }
+        }
         val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        registerReceiver(DownloadReceiver, filter)
+        this.registerReceiver(downloadReceiver, filter)
+
     }
 
     private fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         navController = navHostFragment.findNavController()
 

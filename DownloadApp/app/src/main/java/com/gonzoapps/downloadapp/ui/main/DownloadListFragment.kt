@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gonzoapps.downloadapp.R
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.databinding.FragmentDownloadListBinding
+import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
 import com.gonzoapps.downloadapp.util.setCircleColor
 
 
@@ -23,13 +24,13 @@ class DownloadListFragment : Fragment() {
     private val viewModel: DownloadListViewModel by lazy {
         val activity = requireNotNull(this.activity)
         ViewModelProvider(this, DownloadListViewModel.Factory(activity.application, DownloadStatusRepository.getInstance(activity)))
-            .get(DownloadListViewModel::class.java)
+                .get(DownloadListViewModel::class.java)
     }
     private lateinit var binding: FragmentDownloadListBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         binding = FragmentDownloadListBinding.inflate(inflater)
@@ -41,6 +42,7 @@ class DownloadListFragment : Fragment() {
         generateRadioGroup()
 
         binding.buttonDownload.setOnClickListener {
+            binding.buttonDownload.setState(ButtonState.Clicked)
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
             if (rg.checkedRadioButtonId != -1) {
                 viewModel.download(rg.checkedRadioButtonId)
@@ -70,13 +72,17 @@ class DownloadListFragment : Fragment() {
 
     }
 
+    fun handleReceiverDownloadStatus(state: ButtonState) {
+        binding.buttonDownload.setState(state)
+    }
+
     private fun generateRadioGroup() {
         val radioGroup = RadioGroup(this.activity)
         radioGroup.orientation = RadioGroup.VERTICAL
         radioGroup.id = R.id.radioGroup
         radioGroup.layoutParams = RadioGroup.LayoutParams(
-            RadioGroup.LayoutParams.MATCH_PARENT,
-            RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.MATCH_PARENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT,
         )
         val options = viewModel.options.value
         options?.let {

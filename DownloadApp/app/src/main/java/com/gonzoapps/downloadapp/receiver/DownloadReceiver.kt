@@ -8,6 +8,7 @@ import android.content.Intent
 import android.database.Cursor
 import androidx.core.content.ContextCompat
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
+import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
 import com.gonzoapps.downloadapp.util.sendNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -15,11 +16,12 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-object DownloadReceiver: BroadcastReceiver() {
+abstract class DownloadReceiver: BroadcastReceiver() {
 
     private lateinit var dataStore: DownloadStatusRepository
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        broadcastDownloadState(ButtonState.Loading)
 
         context?.let {
             dataStore = DownloadStatusRepository.getInstance(context)
@@ -43,8 +45,10 @@ object DownloadReceiver: BroadcastReceiver() {
                                 if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                     sendNotification(context)
                                     Timber.i("Successful download of id $it.id")
+                                    broadcastDownloadState(ButtonState.Completed)
                                 } else {
                                     Timber.i("Download failed $it.id")
+                                    broadcastDownloadState(ButtonState.Completed)
                                 }
                             }
                         }
@@ -58,10 +62,12 @@ object DownloadReceiver: BroadcastReceiver() {
 
     }
 
+    protected abstract fun broadcastDownloadState(state: ButtonState)
+
     private fun sendNotification(context: Context) {
         Timber.i("Sending Notification")
         val notificationManager = ContextCompat.getSystemService(
-            context,
+                context,
                 NotificationManager::class.java
         ) as NotificationManager
 
