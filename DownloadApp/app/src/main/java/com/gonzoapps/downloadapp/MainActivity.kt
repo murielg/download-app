@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             override fun broadcastDownloadState(state: ButtonState) {
                 if (navController.currentDestination?.id == R.id.mainFragment) {
                     val fragmentInstance = navHostFragment.childFragmentManager.primaryNavigationFragment as DownloadListFragment
-                    fragmentInstance.handleReceiverDownloadStatus(state)
+                    fragmentInstance.updateDownloadButtonWithStatus(state)
                 }
 
             }

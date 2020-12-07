@@ -8,9 +8,10 @@ data class UrlOption(
     val name: String,
     val url: String
 )
+
 @Parcelize
 data class DownloadDetails(
-        val id: Long,
-        val url: String,
-        val success: Boolean
+        var id: Long = 0,
+        var url: String = "",
+        var success: Boolean = false
 ) : Parcelable

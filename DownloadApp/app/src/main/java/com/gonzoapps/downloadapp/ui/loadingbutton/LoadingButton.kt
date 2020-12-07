@@ -66,10 +66,10 @@ class LoadingButton @JvmOverloads constructor(
         buttonState = state
     }
 
-    fun setText(text: String) {
+    private fun setText(text: String) {
         buttonText = text
         invalidate()
-//        requestLayout()
+        requestLayout()
     }
 
     override fun onDraw(canvas: Canvas?) {

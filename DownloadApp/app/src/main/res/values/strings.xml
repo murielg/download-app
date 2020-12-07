@@ -14,4 +14,9 @@
     <string name="button_loading">We are loading</string>
     <string name="title_activity_detail">DetailActivity</string>
 
+    <string name="download_notification_success_message">Download successful</string>
+    <string name="download_notification_failed_message">Download failure</string>
+
+    <string name="error_message_input">Please select option or input your own custom URL below</string>
+
 </resources>

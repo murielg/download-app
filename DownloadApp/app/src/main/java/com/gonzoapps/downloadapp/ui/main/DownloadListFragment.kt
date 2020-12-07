@@ -17,6 +17,9 @@ import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.databinding.FragmentDownloadListBinding
 import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
 import com.gonzoapps.downloadapp.util.setCircleColor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class DownloadListFragment : Fragment() {
@@ -42,14 +45,14 @@ class DownloadListFragment : Fragment() {
         generateRadioGroup()
 
         binding.buttonDownload.setOnClickListener {
-            binding.buttonDownload.setState(ButtonState.Clicked)
+            updateDownloadButtonWithStatus(ButtonState.Loading)
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
             if (rg.checkedRadioButtonId != -1) {
                 viewModel.download(rg.checkedRadioButtonId)
             } else if (!binding.edittextUrl.text.toString().equals("")) {
                 viewModel.download(binding.edittextUrl.text.toString())
             } else {
-                Toast.makeText(activity, "Please select option or input your own custom URL below", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.error_message_input, Toast.LENGTH_SHORT).show()
             }
             hideKeyboard()
         }
@@ -72,8 +75,10 @@ class DownloadListFragment : Fragment() {
 
     }
 
-    fun handleReceiverDownloadStatus(state: ButtonState) {
-        binding.buttonDownload.setState(state)
+    fun updateDownloadButtonWithStatus(state: ButtonState) {
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.buttonDownload.setState(state)
+        }
     }
 
     private fun generateRadioGroup() {

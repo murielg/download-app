@@ -9,17 +9,17 @@ import com.gonzoapps.downloadapp.R
 import com.gonzoapps.downloadapp.domain.DownloadDetails
 import timber.log.Timber
 
-private const val ARG_PARAM1 = "download"
+const val ARG_PARAM_DOWNLOAD = "download"
 
 class DetailFragment : Fragment() {
 
-    private var param1: DownloadDetails? = null
+    private var downloadDetails: DownloadDetails? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getParcelable(ARG_PARAM1)
-            Timber.i(param1?.url.toString())
+            downloadDetails = it.getParcelable(ARG_PARAM_DOWNLOAD)
+            Timber.i(downloadDetails?.url.toString())
         }
     }
 
