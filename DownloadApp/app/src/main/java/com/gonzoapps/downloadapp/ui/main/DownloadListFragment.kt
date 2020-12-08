@@ -2,6 +2,7 @@ package com.gonzoapps.downloadapp.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,14 +46,19 @@ class DownloadListFragment : Fragment() {
         generateRadioGroup()
 
         binding.buttonDownload.setOnClickListener {
-            updateDownloadButtonWithStatus(ButtonState.Loading)
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
-            if (rg.checkedRadioButtonId != -1) {
-                viewModel.download(rg.checkedRadioButtonId)
-            } else if (!binding.edittextUrl.text.toString().equals("")) {
-                viewModel.download(binding.edittextUrl.text.toString())
-            } else {
-                Toast.makeText(activity, R.string.error_message_input, Toast.LENGTH_SHORT).show()
+            updateDownloadButtonWithStatus(ButtonState.Loading)
+            when {
+                rg.checkedRadioButtonId != -1 -> {
+                    viewModel.download(rg.checkedRadioButtonId)
+                }
+                binding.edittextUrl.text.toString() != "" -> {
+                    viewModel.download(binding.edittextUrl.text.toString())
+                }
+                else -> {
+                    updateDownloadButtonWithStatus(ButtonState.Completed)
+                    showToast(getString(R.string.error_message_input))
+                }
             }
             hideKeyboard()
         }
@@ -67,12 +73,17 @@ class DownloadListFragment : Fragment() {
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+                showToast(message)
             }
         })
 
         return binding.root
 
+    }
+    private fun showToast(message: String) {
+        val toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.BOTTOM, 0, 150);
+        toast.show()
     }
 
     fun updateDownloadButtonWithStatus(state: ButtonState) {
