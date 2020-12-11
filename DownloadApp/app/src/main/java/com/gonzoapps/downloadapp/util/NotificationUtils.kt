@@ -9,6 +9,7 @@ import com.gonzoapps.downloadapp.MainActivity
 import com.gonzoapps.downloadapp.R
 import com.gonzoapps.downloadapp.domain.DownloadDetails
 import com.gonzoapps.downloadapp.ui.detail.ARG_PARAM_DOWNLOAD
+import com.gonzoapps.downloadapp.ui.detail.ARG_PARAM_NOTIFICATION_ID
 
 private val DOWNLOAD_NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
@@ -22,6 +23,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
     val bundle = Bundle()
     bundle.putParcelable(ARG_PARAM_DOWNLOAD, downloadDetails)
+    bundle.putInt(ARG_PARAM_NOTIFICATION_ID, DOWNLOAD_NOTIFICATION_ID)
 
     val testPendingIntent = NavDeepLinkBuilder(applicationContext)
             .setComponentName(MainActivity::class.java)

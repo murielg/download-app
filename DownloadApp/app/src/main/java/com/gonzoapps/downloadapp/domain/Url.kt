@@ -1,8 +1,7 @@
 package com.gonzoapps.downloadapp.domain
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
+import kotlinx.parcelize.Parcelize
 
 data class UrlOption(
     val name: String,
