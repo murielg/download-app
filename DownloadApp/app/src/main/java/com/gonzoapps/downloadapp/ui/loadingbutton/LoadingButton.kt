@@ -19,7 +19,7 @@ class LoadingButton @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     private var widthSize = 0
     private var heightSize = 0
-    private val cornerRadius = 8.0f
+    private val cornerRadius = 0.0f
     private var textRect = Rect()
     private var progress: Float = 0f
 

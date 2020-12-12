@@ -22,4 +22,10 @@
     <string name="status_label">Status</string>
     <string name="file_name_label">File Name</string>
 
+
+    <string name="status_label_success">Successful download</string>
+    <string name="status_label_failure">Failed download</string>
+
+
+
 </resources>

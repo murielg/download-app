@@ -52,10 +52,10 @@ class DetailFragment : Fragment() {
             binding.textviewFilename.text = it.url
             if (it.success) {
                 binding.textviewStatus.setTextColor(resources.getColor(R.color.success))
-                binding.textviewStatus.text = "YAY"
+                binding.textviewStatus.text = resources.getString(R.string.status_label_success)
             } else {
                 binding.textviewStatus.setTextColor(resources.getColor(R.color.failure))
-                binding.textviewStatus.text = "NAY"
+                binding.textviewStatus.text = resources.getString(R.string.status_label_failure)
             }
         }
 

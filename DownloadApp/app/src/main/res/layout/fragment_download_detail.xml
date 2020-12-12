@@ -4,34 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layoutDescription="@xml/fragment_download_detail_scene">
 
-        <TextView
-            android:id="@+id/textview_filename_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/file_name_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textview_filename"
+        <Button
+            android:id="@+id/button_done"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
 
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            tools:text="Glide by Bumpertech"
+            android:text="@string/label_done"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textview_filename_label"
-            app:layout_constraintTop_toTopOf="@+id/textview_filename_label" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textview_status_label"
@@ -54,21 +42,27 @@
             app:layout_constraintTop_toTopOf="@+id/textview_status_label"
             tools:text="Download Succesful" />
 
-        <Button
-            android:id="@+id/button_done"
+        <TextView
+            android:id="@+id/textview_filename"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/label_done"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textview_filename_label"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Glide by Bumpertech" />
+
+        <TextView
+            android:id="@+id/textview_filename_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/file_name_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>
