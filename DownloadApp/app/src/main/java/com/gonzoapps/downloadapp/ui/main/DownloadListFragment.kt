@@ -49,7 +49,7 @@ class DownloadListFragment : Fragment() {
             val rg: RadioGroup = container?.findViewById(R.id.radioGroup) as RadioGroup
             when {
                 rg.checkedRadioButtonId != -1 -> {
-                    viewModel.download(rg.checkedRadioButtonId)
+//                    viewModel.download(rg.checkedRadioButtonId)
                     updateDownloadButtonWithStatus(ButtonState.Loading)
                 }
                 binding.edittextUrl.text.toString() != "" -> {
