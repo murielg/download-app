@@ -8,7 +8,6 @@ import android.content.Intent
 import android.database.Cursor
 import androidx.core.content.ContextCompat
 import com.gonzoapps.downloadapp.R
-import com.gonzoapps.downloadapp.data.DownloadPreferences
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.domain.DownloadDetails
 import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
@@ -21,8 +20,6 @@ import kotlinx.coroutines.launch
 abstract class DownloadReceiver: BroadcastReceiver() {
 
     private lateinit var dataStore: DownloadStatusRepository
-
-    private lateinit var downloadPreferences: DownloadPreferences
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
