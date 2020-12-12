@@ -21,9 +21,8 @@ class LoadingButton @JvmOverloads constructor(
     private var heightSize = 0
     private val cornerRadius = 8.0f
     private var textRect = Rect()
+    private var progress: Float = 0f
 
-
-    private val valueAnimator = ValueAnimator()
 
     private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { property, old, new ->
         when(new) {
@@ -33,10 +32,11 @@ class LoadingButton @JvmOverloads constructor(
 
             ButtonState.Completed -> {
                 setText("Download")
+//                valueAnimator.cancel()
             }
 
             ButtonState.Clicked -> {
-                setText("Waiting....")
+//                valueAnimator.cancel()
             }
         }
 
@@ -53,7 +53,7 @@ class LoadingButton @JvmOverloads constructor(
         isAntiAlias = true
         color = Color.WHITE
         style = Paint.Style.FILL
-        textSize = 32.0f
+        textSize = 40.0f
     }
 
 
@@ -80,8 +80,8 @@ class LoadingButton @JvmOverloads constructor(
 
         canvas?.drawRoundRect(0f, 0f, buttonWidth, buttonHeight, cornerRadius, cornerRadius, buttonBackgroundPaint)
         textPaint.getTextBounds(buttonText, 0, buttonText.length, textRect)
-        val centerX = measuredWidth.toFloat() / 2
-        val centerY = measuredHeight.toFloat() / 2 - textRect.centerY()
+        val centerX = measuredWidth.toFloat() / 2 - textRect.centerX()
+        val centerY = measuredHeight.toFloat() / 2 + 12
 
         canvas?.drawText(buttonText,centerX, centerY, textPaint)
 

@@ -22,5 +22,8 @@
         <argument
             android:name="download"
             app:argType="com.gonzoapps.downloadapp.domain.DownloadDetails" />
+        <action
+            android:id="@+id/action_detailFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

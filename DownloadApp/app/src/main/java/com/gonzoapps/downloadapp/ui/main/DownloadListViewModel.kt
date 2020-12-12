@@ -11,6 +11,7 @@ import com.gonzoapps.downloadapp.MockProvider
 import com.gonzoapps.downloadapp.R
 import com.gonzoapps.downloadapp.data.DownloadStatusRepository
 import com.gonzoapps.downloadapp.domain.UrlOption
+import com.gonzoapps.downloadapp.ui.loadingbutton.ButtonState
 import com.gonzoapps.downloadapp.util.Event
 import kotlinx.coroutines.launch
 

@@ -18,5 +18,8 @@
     <string name="download_notification_failed_message">Download failure</string>
 
     <string name="error_message_input">Please select option or input your own custom URL below</string>
+    <string name="label_done">Done</string>
+    <string name="status_label">Status</string>
+    <string name="file_name_label">File Name</string>
 
 </resources>
