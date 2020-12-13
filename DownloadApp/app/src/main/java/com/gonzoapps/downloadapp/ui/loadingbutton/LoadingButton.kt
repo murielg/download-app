@@ -1,9 +1,11 @@
 package com.gonzoapps.downloadapp.ui.loadingbutton
 
-import android.R.attr
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -67,30 +69,33 @@ class LoadingButton @JvmOverloads constructor(
 
     private var buttonText = String()
 
-    private val buttonForegroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private var buttonForegroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color =  ContextCompat.getColor(context, R.color.colorPrimary)
     }
 
-    private val buttonBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private var buttonBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color =  ContextCompat.getColor(context, R.color.colorPrimaryDark)
     }
 
-    private val circleForegroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private var circleForegroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color =  ContextCompat.getColor(context, R.color.colorAccent)
     }
 
-    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private var textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         isAntiAlias = true
-        color = Color.WHITE
         style = Paint.Style.FILL
         textSize = 40.0f
     }
 
     init {
         setState(ButtonState.Completed)
+        context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0,0).apply {
+            buttonBackgroundPaint.color = getColor(R.styleable.LoadingButton_buttonBackgroundColor, ContextCompat.getColor(context, R.color.colorPrimaryDark))
+            buttonForegroundPaint.color = getColor(R.styleable.LoadingButton_buttonForegroundColor, ContextCompat.getColor(context,R.color.colorPrimary))
+            textPaint.color = getColor(R.styleable.LoadingButton_buttonTextColor, ContextCompat.getColor(context,R.color.white))
+            recycle()
+        }
     }
 
     fun setState(state: ButtonState) {

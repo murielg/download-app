@@ -62,7 +62,11 @@
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:buttonBackgroundColor="@color/colorPrimaryDark"
+            app:buttonForegroundColor="@color/colorPrimary"
+            app:buttonTextColor="@color/white"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
